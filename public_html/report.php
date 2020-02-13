@@ -7,6 +7,8 @@
   <body>
     <h2>Aliens Abducted Me-Report an abduction</h2>
     <?php
+    include_once(‘..PHPMailer-master/phpmailer.php’); //Chama o arquivo phpmailer.php com as funções para realizar o envio.
+
       $name = $_POST['firtname'].' '.$_POST['lastname'];
       $when_it_happened = $_POST['whenithappened'];
       $how_long = $_POST['howlong'];
@@ -44,61 +46,43 @@
       echo 'Was fang there?'.$fang_spotted.'<br/>';
       echo 'Your email eddress is'.$email;
       echo 'Other comments: '.$other;
+
+      //#########################################
+// Dados da conta de e-mail que fará o envio
+//#########################################
+
+$smtp = new Smtp("localhost"); //Endereço do SMTP, geralmente localhost.
+$smtp->user = "rochajotaerre@gmail.com"; //Conta de email
+$smtp->pass = "jmrj198623"; //Senha da Conta de e-mail.
+$smtp->debug = false; //Somente para usuários avançados que desejam o log do envio para testes.
       /*
       ############biblioteca PHPMailer################
       */
-      // Caminho da biblioteca PHPMailer
-require 'PHPMailer-master/PHPMailerAutoload.php';
+      //#########################################
+      // Envio do formulário
+      //#########################################
 
-// Instância do objeto PHPMailer
-$mail = new PHPMailer;
+      $to = "rochajotaerre@gmail.com"; //Informe aqui o e-mail que deve receber a mensagem do formulário.
+      $from = $email;
+      $subject = "Contato – " . $when_it_happened;
+      $mensagem = $msg;
 
-// Configura para envio de e-mails usando SMTP
-$mail->isSMTP();
+      if (isset($_POST[‘submit’])) {
+if($name && $email && $when_it_happened && $msg) {
+if($smtp->Send($to, $from, $subject, $msg)){
+echo "<script>alert(‘Contato enviado!’);</script>";
+echo "<script>window.location = ‘index.html’;</script>"; //Altere aqui para o endereço de sua página.
+exit;
+}
+}
 
-// Servidor SMTP
-$mail->Host = 'smtp.gmail.com';
+else {
+echo "<script>alert(‘Preencha todos os campos!’);</script>";
+echo "<script>window.location = ‘index.html’;</script>"; //Altere aqui para o endereço de seu formulário
+exit;
+}
 
-// Usar autenticação SMTP
-$mail->SMTPAuth = true;
-
-// Usuário da conta
-$mail->Username = 'rochajotaerre@gmail.com';
-
-// Senha da conta
-$mail->Password = 'jmrj198623';
-
-// Tipo de encriptação que será usado na conexão SMTP
-$mail->SMTPSecure = 'ssl';
-
-// Porta do servidor SMTP
-$mail->Port = 465;
-
-// Informa se vamos enviar mensagens usando HTML
-$mail->IsHTML(true);
-
-// Email do Remetente
-$mail->From = 'rochajotaerre@gmail.com';
-
-// Nome do Remetente
-$mail->FromName = 'Jotaerre';
-
-// Endereço do e-mail do destinatário
-$mail->addAddress('jotaerre07@yahoo.com.br');
-
-// Assunto do e-mail
-$mail->Subject = 'E-mail PHPMailer';
-
-// Mensagem que vai no corpo do e-mail
-$mail->Body = '<h1>Mensagem enviada via PHPMailer</h1>';
-
-// Envia o e-mail e captura o sucesso ou erro
-if($mail->Send()):
-    echo 'Enviado com sucesso !';
-else:
-    echo 'Erro ao enviar Email:' . $mail->ErrorInfo;
-endif;
-
+}
 
      ?>
   </body>
