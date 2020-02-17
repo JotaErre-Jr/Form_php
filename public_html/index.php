@@ -5,31 +5,21 @@
     <title></title>
   </head>
   <body>
-    <p>Shere your story of alien abduction</p>
-    <form class="" action="report.php" method="post">
-        <label for="firtname">Firt name</label>
-        <input type="text" id="firtname" name="firtname" value=""><br/>
-        <label for="lastname">Last name</label>
-        <input type="text" id="lastname" name="lastname" value=""><br/>
-        <label for="email">What is e-mail eddress?</label>
-        <input type="text" id="email" name="email" value=""><br/>
-        <label for="whenithappened">When did it happen?</label>
-        <input type="text" id="whenithappened" name="whenithappened" value=""><br/>
-        <label for="howlong">How long were you gone?</label>
-        <input type="text" id="howlong" name="howlong" value=""><br/>
-        <label for="howmany">How many did you see?</label>
-        <input type="text" id="howmany" name="howmany" value=""><br/>
-        <label for="aliendescription">Describe them:</label>
-        <input type="text" id="aliendescription" name="aliendescription" size="32" value=""><br/>
-        <label for="whattheydid">What did they do to you?</label>
-        <input type="text" id="whattheydid" name="whattheydid" size="32" value=""><br/>
-        <label for="fangspotted">Have you seen my dog Fang?</label>
-        Yes<input type="radio" id="fangspotted" name="fangspotted" value="yes">
-        No<input type="radio" id="fangspotted" name="fangspotted" value="no"><br/>
-        <label for="other">Anything else you want to add?</label>
-        <textarea name="other" id="other" rows="8" cols="80"></textarea><br/>
-        <input type="submit" name="submit" value="Report abduction">
+    <?php
+      $dbc=mysqli_connect('localhost', 'root', '', 'aliendatabase')
+      or die('Error connect to MySQL server.');
+      $query="INSERT INTO alien_abduction(first_name, last_name, when_it_happened, how_long,".
+      "how_many, alien_description,what_they_did, fang_spotted, Other, email)".
+      "VALUES('Sally', 'Jones', '3 dias atrás', '1 dia', 'quatro', ".
+      "'Verde com seis tentaculos', 'Nós só conversamos e brincamos com um cachorro', ".
+      "'sim', 'Acho que posso ter visto seu cão. Ene em contato.',".
+      "'sally@gregs-list.net')";
+      $result = mysqli_query($dbc, $query)
+      or die('Error querying database.');
 
-    </form>
+      mysqli_close($dbc);
+
+
+     ?>
   </body>
 </html>
