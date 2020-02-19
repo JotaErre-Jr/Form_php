@@ -6,18 +6,38 @@
   </head>
   <body>
     <?php
+    $first_name = $_POST['firtname'];
+    $last_name = $_POST['lastname'];
+    $when_it_happened = $_POST['whenithappened'];
+    $how_long = $_POST['howlong'];
+    $how_many = $_POST['howmany'];
+    $what_they_did = $_POST['whattheydid'];
+    $alien_description = $_POST['aliendescription'];
+    $fang_spotted = $_POST['fangspotted'];
+    $email = $_POST['email'];
+    $other = $_POST['other'];
+
       $dbc=mysqli_connect('localhost', 'root', '', 'aliendatabase')
       or die('Error connect to MySQL server.');
-      $query="INSERT INTO alien_abduction(first_name, last_name, when_it_happened, how_long,".
-      "how_many, alien_description,what_they_did, fang_spotted, Other, email)".
-      "VALUES('Sally', 'Jones', '3 dias atrás', '1 dia', 'quatro', ".
-      "'Verde com seis tentaculos', 'Nós só conversamos e brincamos com um cachorro', ".
-      "'sim', 'Acho que posso ter visto seu cão. Ene em contato.',".
-      "'sally@gregs-list.net')";
+      $query="INSERT INTO aliens_abduction(first_name, last_name, when_it_happened, how_long,
+      how_many, alien_description,what_they_did, fang_spotted, Other, email)
+      VALUES('$first_name', '$last_name', '$when_it_happened', '$how_long', '$how_many',
+      '$alien_description', '$what_they_did','$fang_spotted', '$other','$email')";
       $result = mysqli_query($dbc, $query)
       or die('Error querying database.');
 
       mysqli_close($dbc);
+
+      echo 'Thanks for submitting the form.<br/>';
+      echo 'MY Name is: '.$first_name. '<br/>';
+      echo 'MY Last Name is: '.$last_name. '<br/>';
+      echo 'You are abducted '.$when_it_happened.'<br/>';
+      echo 'Were:'.$how_many.'<br/>';
+      echo 'ande ware gone for'.$how_long.'<br/>';
+      echo 'describe them:'.$alien_description.'<br/>';
+      echo 'Was fang there?'.$fang_spotted.'<br/>';
+      echo 'Your email eddress is'.$email.'<br/>';
+      echo 'Other comments: '.$other;
 
 
      ?>
